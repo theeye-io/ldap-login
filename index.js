@@ -2,7 +2,13 @@ const express      = require('express')
 const passport     = require('passport')
 const bodyParser   = require('body-parser')
 const LdapStrategy = require('passport-ldapauth')
-const config = require('./config').ldapauth
+
+var config, env
+if (env = process.env.NODE_ENV) {
+	config = require(`./${env}.config`).ldapauth
+} else {
+	config = require(`./config`).ldapauth
+}
  
 passport.use(
   new LdapStrategy(config, (user, done) => {

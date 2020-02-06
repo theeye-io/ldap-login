@@ -7,12 +7,12 @@ module.exports = {
    */
   ldapauth: {
     provider: 'ActiveDirectory',
-    customerName: 'comafi',
+    customerName: 'default',
     server: {
       url: 'ldap://10.2.4.104',
-      bindDN: 'bue299\\_Srv_Vmc',
-      bindCredentials: 'srvvmc',
-      searchBase: 'dc=bue299,dc=comafi,dc=com,dc=ar',
+      bindDN: '',
+      bindCredentials: '',
+      searchBase: '',
       searchAttributes: ['objectSid', 'name', 'mail', 'sAMAccountName', 'memberOf'],
       searchFilter: '(sAMAccountName={{username}})'
     },
