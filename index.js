@@ -24,7 +24,14 @@ app.post('/login',
 	console.log(req.query)
 	next()
   },
-  passport.authenticate('ldapauth', {session: false}),
+  (req, res, next) => {
+  passport.authenticate('ldapauth', {session: false}, (err, user, info) => {
+		  console.log(err)
+		  console.log(user)
+		  console.log(info)
+next()
+		  })(req,res,req.next)
+  },
   function(req, res) {
 console.log('authenticated')
    res.send(req.user)
