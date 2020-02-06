@@ -5,42 +5,43 @@ const LdapStrategy = require('passport-ldapauth')
 
 var config, env
 if (env = process.env.NODE_ENV) {
-	config = require(`./${env}.config`).ldapauth
+  config = require(`./${env}.config`).ldapauth
 } else {
-	config = require(`./config`).ldapauth
+  config = require(`./config`).ldapauth
 }
- 
+
 passport.use(
   new LdapStrategy(config, (user, done) => {
-	console.log('user')
-	console.log(user)
-	done(null, user)
+    console.log('user')
+    console.log(user)
+    done(null, user)
   })
 )
+
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(passport.initialize())
 
- 
+
 app.post('/login',
   (req, res, next) => {
-	console.log(req.body)
-	console.log(req.params)
-	console.log(req.query)
-	next()
+    console.log(req.body)
+    console.log(req.params)
+    console.log(req.query)
+    next()
   },
   (req, res, next) => {
-  passport.authenticate('ldapauth', {session: false}, (err, user, info) => {
-		  console.log(err)
-		  console.log(user)
-		  console.log(info)
-next()
-		  })(req,res,req.next)
+    passport.authenticate('ldapauth', {session: false}, (err, user, info) => {
+      console.log(err)
+      console.log(user)
+      console.log(info)
+      next()
+    })(req,res,req.next)
   },
   function(req, res) {
-console.log('authenticated')
-   res.send(req.user)
+    console.log('authenticated')
+    res.send(req.user)
   }
 )
 
